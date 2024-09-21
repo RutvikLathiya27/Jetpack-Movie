@@ -1,7 +1,7 @@
 package com.example.moviebox.di
 
-import com.example.moviebox.data.datasource.remote.ApiService
-import com.example.moviebox.data.datasource.remote.ApiURL
+import com.example.moviebox.data.remote.ApiService
+import com.example.moviebox.data.remote.ApiURL
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,6 +18,9 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
+    /**
+     * Provides Base URL
+     */
     @Singleton
     @Provides
     fun provideBaseURL(): String {
@@ -59,13 +62,16 @@ object NetworkModule {
         return okHttpClient.build()
     }
 
+    /**
+     * Provides Retrofit instance
+     */
     @Singleton
     @Provides
     fun provideRetrofitClient(
-        baseUrl :String,
+        baseUrl: String,
         okHttpClient: OkHttpClient,
         converterFactory: Converter.Factory
-    ): Retrofit{
+    ): Retrofit {
         return Retrofit.Builder()
             .baseUrl(baseUrl)
             .client(okHttpClient)

@@ -1,10 +1,8 @@
 package com.example.moviebox.ui.screens.movie_detail_screen
 
-import android.graphics.Paint.Align
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -15,25 +13,19 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.icons.Icons
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -44,12 +36,9 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.example.moviebox.R
-import com.example.moviebox.data.datasource.models.moview_detail.MovieDetailModel
-import com.example.moviebox.data.datasource.remote.ApiURL
+import com.example.moviebox.data.remote.ApiURL
 import com.example.moviebox.ui.composable.MovieBoxAppBar
-import com.example.moviebox.ui.theme.LightBlue
-import com.example.moviebox.ui.theme.Secondary
-import com.example.moviebox.ui.theme.White
+import com.example.moviebox.ui.theme.MBTheme
 import com.skydoves.landscapist.glide.GlideImage
 
 @Composable
@@ -67,7 +56,7 @@ fun MovieDetailScreen(movieId: Int, navController: NavHostController) {
 
     Scaffold(modifier = Modifier
         .fillMaxSize()
-        .background(Secondary),
+        .background(MBTheme.colors.secondary),
         topBar = { MovieBoxAppBar(title = "Movie Details") }) { innerPadding ->
         if (isLoading.value) {
             CircularProgressIndicator(color = Color.Gray, modifier = Modifier.padding(innerPadding))
@@ -75,7 +64,7 @@ fun MovieDetailScreen(movieId: Int, navController: NavHostController) {
             Column(
                 modifier = Modifier
                     .padding(innerPadding)
-                    .background(Secondary)
+                    .background(MBTheme.colors.secondary)
                     .fillMaxSize()
             ) {
 
@@ -131,7 +120,7 @@ fun MovieDetailScreen(movieId: Int, navController: NavHostController) {
                         fontSize = 18.sp,
                         maxLines = 1,
                         overflow = TextOverflow.Clip,
-                        color = White,
+                        color = MBTheme.colors.white,
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(top = 4.dp, start = 12.dp, end = 12.dp)
@@ -161,7 +150,7 @@ fun MovieDetailScreen(movieId: Int, navController: NavHostController) {
                         Text(
                             text = movieDetail.value!!.runtime.toString().plus(" min"),
                             fontSize = 14.sp,
-                            color = White,
+                            color = MBTheme.colors.white,
 
                             modifier = Modifier
                                 .weight(1f)
@@ -175,7 +164,7 @@ fun MovieDetailScreen(movieId: Int, navController: NavHostController) {
                         Text(
                             text = String.format("%.1f", movieDetail.value!!.rating),
                             fontSize = 14.sp,
-                            color = White,
+                            color = MBTheme.colors.white,
                             modifier = Modifier
                                 .weight(1f)
                                 .padding(start = 4.dp)
@@ -183,7 +172,8 @@ fun MovieDetailScreen(movieId: Int, navController: NavHostController) {
 
                     }
 
-                    Text(text = "Release on : ${movieDetail.value!!.releaseDate}", color = White,
+                    Text(text = "Release on : ${movieDetail.value!!.releaseDate}",
+                        color = MBTheme.colors.white,
                         modifier = Modifier
                             .padding(start = 12.dp, top = 5.dp)
                             .constrainAs(release) {
@@ -220,8 +210,10 @@ fun getActorsList(movieId: Int) {
 
     }
 
-    Column(modifier = Modifier.fillMaxWidth().padding(top = 18.dp)) {
-        Text(text = "Casts", color = White, modifier = Modifier.fillMaxWidth())
+    Column(modifier = Modifier
+        .fillMaxWidth()
+        .padding(top = 18.dp)) {
+        Text(text = "Casts", color = MBTheme.colors.white, modifier = Modifier.fillMaxWidth())
     }
 
 }

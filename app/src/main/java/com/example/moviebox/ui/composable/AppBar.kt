@@ -15,16 +15,14 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.moviebox.ui.theme.Primary
-import com.example.moviebox.ui.theme.White
-
+import com.example.moviebox.ui.theme.MBTheme
 
 @Composable
 fun MovieBoxAppBar(title: String = "Movie Box") {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .background(color = Primary)
+            .background(color = MBTheme.colors.primary)
             .statusBarsPadding()
             .padding(horizontal = 6.dp),
         verticalAlignment = Alignment.CenterVertically
@@ -34,7 +32,7 @@ fun MovieBoxAppBar(title: String = "Movie Box") {
             fontSize = 20.sp,
             maxLines = 1,
             style = TextStyle(fontWeight = FontWeight.SemiBold),
-            color = White,
+            color = MBTheme.colors.white,
             modifier = Modifier.weight(1f)
                 .padding(bottom = 10.dp),
             textAlign = TextAlign.Center

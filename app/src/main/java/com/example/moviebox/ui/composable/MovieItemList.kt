@@ -28,12 +28,10 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.paging.LoadState
-import androidx.paging.LoadStates
 import androidx.paging.compose.LazyPagingItems
-import com.example.moviebox.data.datasource.models.MovieItem
-import com.example.moviebox.data.datasource.remote.ApiURL
-import com.example.moviebox.ui.theme.Black80
-import com.example.moviebox.ui.theme.LightBlue
+import com.example.moviebox.data.models.MovieItem
+import com.example.moviebox.data.remote.ApiURL
+import com.example.moviebox.ui.theme.MBTheme
 import com.skydoves.landscapist.glide.GlideImage
 
 @Composable
@@ -114,7 +112,7 @@ fun MovieItemPreview(movieItem: MovieItem, onClick: (Int) -> Unit) {
                 .padding(all = 4.dp)
                 .align(Alignment.BottomEnd)
                 .clip(CircleShape)
-                .background(color = Black80),
+                .background(color = MBTheme.colors.black80),
         ) {
 
             Text(
@@ -122,7 +120,7 @@ fun MovieItemPreview(movieItem: MovieItem, onClick: (Int) -> Unit) {
                 fontSize = 14.sp,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
-                color = LightBlue,
+                color = MBTheme.colors.lightBlue,
                 modifier = Modifier.padding(vertical = 4.dp, horizontal = 6.dp)
             )
 

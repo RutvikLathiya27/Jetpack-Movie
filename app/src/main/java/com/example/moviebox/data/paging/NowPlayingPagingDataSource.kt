@@ -1,10 +1,10 @@
-package com.example.moviebox.data.datasource.paging
+package com.example.moviebox.data.paging
 
 import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
-import com.example.moviebox.data.datasource.models.MovieItem
-import com.example.moviebox.data.datasource.remote.ApiService
+import com.example.moviebox.data.models.MovieItem
+import com.example.moviebox.data.remote.ApiService
 import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject

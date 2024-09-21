@@ -7,7 +7,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.example.moviebox.data.datasource.models.MovieItem
+import com.example.moviebox.data.models.MovieItem
 import com.example.moviebox.ui.composable.MovieItemList
 
 @Composable
