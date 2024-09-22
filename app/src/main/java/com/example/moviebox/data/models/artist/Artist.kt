@@ -1,4 +1,4 @@
-package com.piashcse.hilt_mvvm_compose_movie.data.model.artist
+package com.example.moviebox.data.models.artist
 
 
 import com.google.gson.annotations.SerializedName

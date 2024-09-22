@@ -10,7 +10,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import com.example.moviebox.data.datasource.models.MovieItem
+import com.example.moviebox.data.models.MovieItem
 import com.example.moviebox.ui.composable.CircularIndeterminateProgressBar
 import com.example.moviebox.ui.composable.MovieItemList
 import com.example.moviebox.ui.navigations.Screens

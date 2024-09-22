@@ -1,34 +1,73 @@
 package com.example.moviebox.ui.theme
 
-import androidx.compose.material3.Typography
+import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 
-// Set of Material typography styles to start with
-val Typography = Typography(
-    bodyLarge = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Normal,
-        fontSize = 16.sp,
-        lineHeight = 24.sp,
-        letterSpacing = 0.5.sp
+@Immutable
+data class MBTypography(
+    val s1: TextStyle,
+    val s2: TextStyle,
+    val s3: TextStyle,
+    val m1: TextStyle,
+    val m2: TextStyle,
+    val m3: TextStyle,
+    val l1: TextStyle,
+    val l2: TextStyle,
+    val l3: TextStyle
+)
+
+val LocalMBTypography = staticCompositionLocalOf {
+    MBTypography(
+        s1 = TextStyle.Default,
+        s2 = TextStyle.Default,
+        s3 = TextStyle.Default,
+        m1 = TextStyle.Default,
+        m2 = TextStyle.Default,
+        m3 = TextStyle.Default,
+        l1 = TextStyle.Default,
+        l2 = TextStyle.Default,
+        l3 = TextStyle.Default
     )
-    /* Other default text styles to override
-    titleLarge = TextStyle(
-        fontFamily = FontFamily.Default,
-        fontWeight = FontWeight.Normal,
-        fontSize = 22.sp,
-        lineHeight = 28.sp,
-        letterSpacing = 0.sp
+}
+
+val mbTypography = MBTypography(
+    s1 = TextStyle(
+        fontWeight = FontWeight.Light,
+        fontSize = 12.sp
     ),
-    labelSmall = TextStyle(
-        fontFamily = FontFamily.Default,
+    s2 = TextStyle(
+        fontWeight = FontWeight.Light,
+        fontSize = 11.sp
+    ),
+    s3 = TextStyle(
+        fontWeight = FontWeight.Light,
+        fontSize = 10.sp
+    ),
+    m1 = TextStyle(
+        fontWeight = FontWeight.Normal,
+        fontSize = 16.sp
+    ),
+    m2 = TextStyle(
+        fontWeight = FontWeight.Normal,
+        fontSize = 14.sp
+    ),
+    m3 = TextStyle(
+        fontWeight = FontWeight.Normal,
+        fontSize = 12.sp
+    ),
+    l1 = TextStyle(
         fontWeight = FontWeight.Medium,
-        fontSize = 11.sp,
-        lineHeight = 16.sp,
-        letterSpacing = 0.5.sp
+        fontSize = 20.sp
+    ),
+    l2 = TextStyle(
+        fontWeight = FontWeight.Medium,
+        fontSize = 18.sp
+    ),
+    l3 = TextStyle(
+        fontWeight = FontWeight.Medium,
+        fontSize = 16.sp
     )
-    */
 )

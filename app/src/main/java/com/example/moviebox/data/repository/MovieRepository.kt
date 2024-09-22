@@ -1,14 +1,13 @@
-package com.example.moviebox.data.datasource.repository
+package com.example.moviebox.data.repository
 
-import android.provider.ContactsContract.Data
 import androidx.paging.PagingData
-import com.example.moviebox.data.datasource.models.MovieItem
-import com.example.moviebox.data.datasource.models.moview_detail.MovieDetailModel
+import com.example.moviebox.data.models.MovieItem
+import com.example.moviebox.data.models.moview_detail.MovieDetailModel
 import com.example.moviebox.utils.DataState
-import com.piashcse.hilt_mvvm_compose_movie.data.model.artist.Artist
+import com.example.moviebox.data.models.artist.Artist
 import kotlinx.coroutines.flow.Flow
 
-interface MovieRepositoryInterface {
+interface MovieRepository {
 
     suspend fun movieDetail(movieId: Int): Flow<DataState<MovieDetailModel>>
     suspend fun getMovieCast(movieId: Int) : Flow<DataState<Artist>>

@@ -2,12 +2,10 @@ package com.example.moviebox.ui.composable
 
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.constraintlayout.compose.ConstraintLayout
-import com.example.moviebox.ui.theme.LightBlue
+import com.example.moviebox.ui.theme.MBTheme
 
 @Composable
 fun CircularIndeterminateProgressBar(isDisplayed: Boolean, verticalBias: Float) {
@@ -24,7 +22,7 @@ fun CircularIndeterminateProgressBar(isDisplayed: Boolean, verticalBias: Float) 
                     end.linkTo(parent.end)
                     start.linkTo(parent.start)
                 },
-                color = LightBlue
+                color = MBTheme.colors.lightBlue
             )
         }
 

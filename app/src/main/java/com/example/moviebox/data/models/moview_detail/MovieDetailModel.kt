@@ -1,4 +1,4 @@
-package com.example.moviebox.data.datasource.models.moview_detail
+package com.example.moviebox.data.models.moview_detail
 
 import com.google.gson.annotations.SerializedName
 

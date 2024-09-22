@@ -1,12 +1,11 @@
 package com.example.moviebox.di
 
-import com.example.moviebox.data.datasource.remote.ApiService
-import com.example.moviebox.data.datasource.repository.MovieRepository
-import com.example.moviebox.data.datasource.repository.MovieRepositoryInterface
+import com.example.moviebox.data.remote.ApiService
+import com.example.moviebox.data.repository.MovieRepositoryImpl
+import com.example.moviebox.data.repository.MovieRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
-import dagger.hilt.android.components.ActivityComponent
 import dagger.hilt.components.SingletonComponent
 
 @Module
@@ -14,8 +13,8 @@ import dagger.hilt.components.SingletonComponent
 object RepositoryModule {
 
     @Provides
-    fun provideMoviesRepository(apiService: ApiService) : MovieRepositoryInterface{
-        return MovieRepository(apiService)
+    fun provideMoviesRepository(apiService: ApiService): MovieRepository {
+        return MovieRepositoryImpl(apiService)
     }
 
 }

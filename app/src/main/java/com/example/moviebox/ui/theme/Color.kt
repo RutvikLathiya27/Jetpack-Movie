@@ -1,20 +1,50 @@
 package com.example.moviebox.ui.theme
 
+import androidx.compose.runtime.Immutable
+import androidx.compose.runtime.staticCompositionLocalOf
 import androidx.compose.ui.graphics.Color
 
-val Purple80 = Color(0xFFD0BCFF)
-val PurpleGrey80 = Color(0xFFCCC2DC)
-val Pink80 = Color(0xFFEFB8C8)
+private val Black80 = Color(0xCC000000)
+private val White = Color(0xffffffff)
+private val Primary = Color(0xff000000)
+private val Secondary = Color(0xff1C1C1E)
+private val SystemGrey = Color(0xFF3A3A3C)
+private val LightBlue = Color(0xff6EACDE)
+private val LightBlue75 = Color(0xBF6EACDE)
+private val White50 = Color(0x80FFFFFF)
 
-val Purple40 = Color(0xFF6650a4)
-val PurpleGrey40 = Color(0xFF625b71)
-val Pink40 = Color(0xFF7D5260)
+@Immutable
+data class MBColors(
+    val black80: Color,
+    val white: Color,
+    val primary: Color,
+    val secondary: Color,
+    val systemGrey: Color,
+    val lightBlue: Color,
+    val lightBlue75: Color,
+    val white50 : Color
+)
 
-val Black80 = Color(0xCC000000)
-val White = Color(0xffffffff)
-val Primary = Color(0xff000000)
-val Secondary = Color(0xff1C1C1E)
-val SystemGrey = Color(0xFF3A3A3C)
-val LightBlue = Color(0xff6EACDE)
-val LightBlue75 = Color(0xBF6EACDE)
-val White50 = Color(0x80FFFFFF)
+val LocalMBColors = staticCompositionLocalOf {
+    MBColors(
+        black80 = Color.Unspecified,
+        white = Color.Unspecified,
+        primary = Color.Unspecified,
+        secondary = Color.Unspecified,
+        systemGrey = Color.Unspecified,
+        lightBlue = Color.Unspecified,
+        lightBlue75 = Color.Unspecified,
+        white50 = Color.Unspecified
+    )
+}
+
+val mbColors = MBColors(
+    black80 = Black80,
+    white = White,
+    primary = Primary,
+    secondary = Secondary,
+    systemGrey = SystemGrey,
+    lightBlue = LightBlue,
+    lightBlue75 = LightBlue75,
+    white50 = White50
+)

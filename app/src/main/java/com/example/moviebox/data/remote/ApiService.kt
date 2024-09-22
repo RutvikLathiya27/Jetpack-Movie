@@ -1,8 +1,8 @@
-package com.example.moviebox.data.datasource.remote
+package com.example.moviebox.data.remote
 
-import com.example.moviebox.data.datasource.models.BaseModel
-import com.example.moviebox.data.datasource.models.moview_detail.MovieDetailModel
-import com.piashcse.hilt_mvvm_compose_movie.data.model.artist.Artist
+import com.example.moviebox.data.models.BaseModel
+import com.example.moviebox.data.models.moview_detail.MovieDetailModel
+import com.example.moviebox.data.models.artist.Artist
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query

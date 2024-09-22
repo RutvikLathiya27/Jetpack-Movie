@@ -1,28 +1,20 @@
 package com.example.moviebox.ui.screens.movie_detail_screen
 
-import android.provider.ContactsContract.Data
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.moviebox.data.datasource.models.moview_detail.MovieDetailModel
-import com.example.moviebox.data.datasource.repository.MovieRepositoryInterface
+import com.example.moviebox.data.models.artist.Artist
+import com.example.moviebox.data.models.moview_detail.MovieDetailModel
+import com.example.moviebox.data.repository.MovieRepository
 import com.example.moviebox.utils.DataState
-import com.piashcse.hilt_mvvm_compose_movie.data.model.artist.Artist
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Deferred
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.async
-import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MovieDetailViewModel @Inject constructor(private val repositoryInterface: MovieRepositoryInterface) :
+class MovieDetailViewModel @Inject constructor(private val repositoryInterface: MovieRepository) :
     ViewModel() {
 
     private val _movieDetail = MutableStateFlow<MovieDetailModel?>(null)

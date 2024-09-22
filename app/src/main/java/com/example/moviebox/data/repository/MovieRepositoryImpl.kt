@@ -1,25 +1,25 @@
-package com.example.moviebox.data.datasource.repository
+package com.example.moviebox.data.repository
 
 import android.util.Log
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import com.example.moviebox.data.datasource.models.MovieItem
-import com.example.moviebox.data.datasource.models.moview_detail.MovieDetailModel
-import com.example.moviebox.data.datasource.paging.NowPlayingPagingDataSource
-import com.example.moviebox.data.datasource.paging.PopularPagingDataSource
-import com.example.moviebox.data.datasource.paging.TopRatedPagingDataSource
-import com.example.moviebox.data.datasource.paging.UpcomingPagingDataSource
-import com.example.moviebox.data.datasource.remote.ApiService
+import com.example.moviebox.data.models.MovieItem
+import com.example.moviebox.data.models.moview_detail.MovieDetailModel
+import com.example.moviebox.data.paging.NowPlayingPagingDataSource
+import com.example.moviebox.data.paging.PopularPagingDataSource
+import com.example.moviebox.data.paging.TopRatedPagingDataSource
+import com.example.moviebox.data.paging.UpcomingPagingDataSource
+import com.example.moviebox.data.remote.ApiService
 import com.example.moviebox.utils.DataState
-import com.piashcse.hilt_mvvm_compose_movie.data.model.artist.Artist
+import com.example.moviebox.data.models.artist.Artist
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 
-class MovieRepository @Inject constructor(
+class MovieRepositoryImpl @Inject constructor(
     private val apiService: ApiService
-) : MovieRepositoryInterface {
+) : MovieRepository {
 
     override suspend fun movieDetail(movieId: Int): Flow<DataState<MovieDetailModel>> = flow {
         emit(DataState.Loading)

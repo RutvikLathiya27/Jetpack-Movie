@@ -30,15 +30,14 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.example.moviebox.ui.composable.MovieBoxAppBar
-import com.example.moviebox.ui.theme.MovieBoxTheme
 import com.example.moviebox.ui.navigations.BottomNavigationItem
 import com.example.moviebox.ui.navigations.Screens
 import com.example.moviebox.ui.screens.movie_detail_screen.MovieDetailScreen
 import com.example.moviebox.ui.screens.now_playing_screen.NowPlayingScreen
 import com.example.moviebox.ui.screens.top_rated_screen.TopRatedScreen
 import com.example.moviebox.ui.screens.upcoming_screen.UpComingMovieScreen
-import com.example.moviebox.ui.theme.Primary
-import com.example.moviebox.ui.theme.Secondary
+import com.example.moviebox.ui.theme.MBTheme
+import com.example.moviebox.ui.theme.MovieBoxTheme
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.serialization.Serializable
 
@@ -82,11 +81,11 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 private fun AppNavHost(navController: NavHostController) {
-    NavHost(navController = navController, startDestination = Screens.MainScreen){
-        composable<Screens.MainScreen>{
+    NavHost(navController = navController, startDestination = Screens.MainScreen) {
+        composable<Screens.MainScreen> {
             MainScreen(navController)
         }
-        composable<Screens.MovieDetailScreen>{
+        composable<Screens.MovieDetailScreen> {
             val args = it.toRoute<Screens.MovieDetailScreen>()
             MovieDetailScreen(movieId = args.movieId, navController)
         }
@@ -101,7 +100,7 @@ fun BottomNavigationBar(
     onSelected: (Int) -> Unit
 ) {
     NavigationBar(
-        containerColor = Primary,
+        containerColor = MBTheme.colors.primary,
     ) {
         navigationItems.forEachIndexed { index, item ->
             NavigationBarItem(
@@ -130,7 +129,7 @@ fun MainScreen(navControllerMain: NavHostController) {
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        containerColor = Secondary,
+        containerColor = MBTheme.colors.secondary,
         bottomBar = {
             BottomNavigationBar(
                 navigationItems = navigationItems,
@@ -154,7 +153,10 @@ fun MainScreen(navControllerMain: NavHostController) {
                 TopRatedScreen(Modifier.padding(innerPadding), navController)
             }
             composable<Screens.UpcomingScreen> {
-                UpComingMovieScreen(modifier = Modifier.padding(innerPadding), navController = navController)
+                UpComingMovieScreen(
+                    modifier = Modifier.padding(innerPadding),
+                    navController = navController
+                )
             }
 
 
@@ -164,7 +166,7 @@ fun MainScreen(navControllerMain: NavHostController) {
 }
 
 @Serializable
-data class ABC(val a :Int)
+data class ABC(val a: Int)
 
 
 @Preview(showBackground = true)

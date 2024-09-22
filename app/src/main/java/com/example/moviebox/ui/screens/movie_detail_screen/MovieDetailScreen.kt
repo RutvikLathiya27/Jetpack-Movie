@@ -1,5 +1,6 @@
 package com.example.moviebox.ui.screens.movie_detail_screen
 
+import android.graphics.drawable.Icon
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
@@ -49,13 +50,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.example.moviebox.R
-import com.example.moviebox.data.datasource.remote.ApiURL
+import com.example.moviebox.data.models.artist.Artist
+import com.example.moviebox.data.remote.ApiURL
 import com.example.moviebox.ui.composable.MovieBoxAppBar
-import com.example.moviebox.ui.theme.LightBlue
-import com.example.moviebox.ui.theme.Secondary
-import com.example.moviebox.ui.theme.White
-import com.example.moviebox.ui.theme.White50
-import com.piashcse.hilt_mvvm_compose_movie.data.model.artist.Artist
+import com.example.moviebox.ui.theme.MBTheme
 import com.skydoves.landscapist.glide.GlideImage
 
 @Composable
@@ -73,7 +71,7 @@ fun MovieDetailScreen(movieId: Int, navController: NavHostController) {
 
     Scaffold(modifier = Modifier
         .fillMaxSize()
-        .background(Secondary),
+        .background(MBTheme.colors.secondary),
         topBar = { MovieBoxAppBar(title = "Movie Details") }) { innerPadding ->
         if (isLoading.value) {
             CircularProgressIndicator(color = Color.Gray, modifier = Modifier.padding(innerPadding))
@@ -81,7 +79,7 @@ fun MovieDetailScreen(movieId: Int, navController: NavHostController) {
             Column(
                 modifier = Modifier
                     .padding(innerPadding)
-                    .background(Secondary)
+                    .background(MBTheme.colors.secondary)
                     .fillMaxSize()
             ) {
 
@@ -138,7 +136,7 @@ fun MovieDetailScreen(movieId: Int, navController: NavHostController) {
                         fontSize = 18.sp,
                         maxLines = 1,
                         overflow = TextOverflow.Clip,
-                        color = White,
+                        color = MBTheme.colors.white,
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(top = 4.dp, start = 12.dp, end = 12.dp)
@@ -168,7 +166,7 @@ fun MovieDetailScreen(movieId: Int, navController: NavHostController) {
                         Text(
                             text = movieDetail.value!!.runtime.toString().plus(" min"),
                             fontSize = 14.sp,
-                            color = White,
+                            color = MBTheme.colors.white,
 
                             modifier = Modifier
                                 .weight(1f)
@@ -182,7 +180,7 @@ fun MovieDetailScreen(movieId: Int, navController: NavHostController) {
                         Text(
                             text = String.format("%.1f", movieDetail.value!!.rating),
                             fontSize = 14.sp,
-                            color = White,
+                            color = MBTheme.colors.white,
                             modifier = Modifier
                                 .weight(1f)
                                 .padding(start = 4.dp)
@@ -190,7 +188,8 @@ fun MovieDetailScreen(movieId: Int, navController: NavHostController) {
 
                     }
 
-                    Text(text = "Release on : ${movieDetail.value!!.releaseDate}", color = White,
+                    Text(text = "Release on : ${movieDetail.value!!.releaseDate}",
+                        color = MBTheme.colors.white,
                         modifier = Modifier
                             .padding(start = 12.dp, top = 5.dp)
                             .constrainAs(release) {
@@ -236,19 +235,20 @@ fun getActorsList(movieId: Int, movieDetailViewModel: MovieDetailViewModel) {
 
     Column(
         modifier = Modifier
+
             .padding(top = 18.dp)
     ) {
         Box(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(0.7.dp)
-                .background(White50),
+                .background(MBTheme.colors.white50),
         )
         Row(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.CenterVertically,
         ) {
-            Text(text = "Casts", color = White, modifier = Modifier.weight(1f))
+            Text(text = "Casts", color = MBTheme.colors.white, modifier = Modifier.weight(1f))
             Image(
                 imageVector = if (isArtistVisible.value) Icons.Outlined.KeyboardArrowUp else Icons.Outlined.KeyboardArrowDown,
                 null,
@@ -257,7 +257,7 @@ fun getActorsList(movieId: Int, movieDetailViewModel: MovieDetailViewModel) {
                         isArtistVisible.value = !isArtistVisible.value
                     }
                     .padding(7.dp),
-                colorFilter = ColorFilter.tint(LightBlue)
+                colorFilter = ColorFilter.tint(MBTheme.colors.lightBlue)
             )
         }
         if (isArtistVisible.value) {
@@ -267,7 +267,9 @@ fun getActorsList(movieId: Int, movieDetailViewModel: MovieDetailViewModel) {
                 LazyRow(state = rememberLazyListState()) {
                     items(lstArtist.value!!.cast.size) { itemCount ->
                         val artist = lstArtist.value!!.cast[itemCount]
-                        Column(modifier = Modifier.width(100.dp).padding(end = 8.dp)) {
+                        Column(modifier = Modifier
+                            .width(100.dp)
+                            .padding(end = 8.dp)) {
                             Box(
                                 modifier = Modifier
                                     .height(100.dp)
@@ -292,7 +294,7 @@ fun getActorsList(movieId: Int, movieDetailViewModel: MovieDetailViewModel) {
                             Text(
                                 artist.name,
                                 maxLines = 1,
-                                color = White,
+                                color = MBTheme.colors.white,
                                 overflow = TextOverflow.Clip,
                                 modifier = Modifier
                                     .fillMaxWidth()

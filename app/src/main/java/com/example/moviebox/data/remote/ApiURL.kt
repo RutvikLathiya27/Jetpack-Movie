@@ -1,4 +1,4 @@
-package com.example.moviebox.data.datasource.remote
+package com.example.moviebox.data.remote
 
 object ApiURL {
     //    const val API_KEY = "1437fbd752c97190fdccd16ebb583c8e"
