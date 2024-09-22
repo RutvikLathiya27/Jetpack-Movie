@@ -102,9 +102,7 @@ fun MovieItemPreview(movieItem: MovieItem, onClick: (Int) -> Unit) {
                 CircularProgressIndicator(color = Color.Gray)
             },
             failure = {
-
                 Icon(imageVector = Icons.Filled.Warning, contentDescription = "Error")
-
             }
         )
         Box(

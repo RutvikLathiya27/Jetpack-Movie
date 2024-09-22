@@ -11,6 +11,7 @@ private val Secondary = Color(0xff1C1C1E)
 private val SystemGrey = Color(0xFF3A3A3C)
 private val LightBlue = Color(0xff6EACDE)
 private val LightBlue75 = Color(0xBF6EACDE)
+private val White50 = Color(0x80FFFFFF)
 
 @Immutable
 data class MBColors(
@@ -20,7 +21,8 @@ data class MBColors(
     val secondary: Color,
     val systemGrey: Color,
     val lightBlue: Color,
-    val lightBlue75: Color
+    val lightBlue75: Color,
+    val white50 : Color
 )
 
 val LocalMBColors = staticCompositionLocalOf {
@@ -31,7 +33,8 @@ val LocalMBColors = staticCompositionLocalOf {
         secondary = Color.Unspecified,
         systemGrey = Color.Unspecified,
         lightBlue = Color.Unspecified,
-        lightBlue75 = Color.Unspecified
+        lightBlue75 = Color.Unspecified,
+        white50 = Color.Unspecified
     )
 }
 
@@ -42,5 +45,6 @@ val mbColors = MBColors(
     secondary = Secondary,
     systemGrey = SystemGrey,
     lightBlue = LightBlue,
-    lightBlue75 = LightBlue75
+    lightBlue75 = LightBlue75,
+    white50 = White50
 )
