@@ -1,10 +1,9 @@
 package com.example.moviebox.ui.screens.movie_detail_screen
 
-import android.graphics.Paint.Align
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.basicMarquee
-import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -15,25 +14,31 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Warning
+import androidx.compose.material.icons.outlined.KeyboardArrowDown
+import androidx.compose.material.icons.outlined.KeyboardArrowUp
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.layout.layoutId
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -44,12 +49,13 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavHostController
 import com.example.moviebox.R
-import com.example.moviebox.data.datasource.models.moview_detail.MovieDetailModel
 import com.example.moviebox.data.datasource.remote.ApiURL
 import com.example.moviebox.ui.composable.MovieBoxAppBar
 import com.example.moviebox.ui.theme.LightBlue
 import com.example.moviebox.ui.theme.Secondary
 import com.example.moviebox.ui.theme.White
+import com.example.moviebox.ui.theme.White50
+import com.piashcse.hilt_mvvm_compose_movie.data.model.artist.Artist
 import com.skydoves.landscapist.glide.GlideImage
 
 @Composable
@@ -89,6 +95,7 @@ fun MovieDetailScreen(movieId: Int, navController: NavHostController) {
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
+                            .background(Color.Gray)
                             .fillMaxHeight(.70f)
                             .constrainAs(topBox) {
                                 top.linkTo(parent.top)
@@ -208,20 +215,94 @@ fun MovieDetailScreen(movieId: Int, navController: NavHostController) {
                     )
                 }
 
+                getActorsList(movieId, movieDetailViewModel)
+
             }
         }
     }
 }
 
 @Composable
-fun getActorsList(movieId: Int) {
+fun getActorsList(movieId: Int, movieDetailViewModel: MovieDetailViewModel) {
+
+    val lstArtist = remember { mutableStateOf<Artist?>(null) }
+    val isArtistVisible = remember { mutableStateOf<Boolean>(true) }
 
     LaunchedEffect(Unit) {
-
+        movieDetailViewModel.getMovieCast(movieId).collect { collect ->
+            lstArtist.value = collect
+        }
     }
 
-    Column(modifier = Modifier.fillMaxWidth().padding(top = 18.dp)) {
-        Text(text = "Casts", color = White, modifier = Modifier.fillMaxWidth())
+    Column(
+        modifier = Modifier
+            .padding(top = 18.dp)
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(0.7.dp)
+                .background(White50),
+        )
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            verticalAlignment = Alignment.CenterVertically,
+        ) {
+            Text(text = "Casts", color = White, modifier = Modifier.weight(1f))
+            Image(
+                imageVector = if (isArtistVisible.value) Icons.Outlined.KeyboardArrowUp else Icons.Outlined.KeyboardArrowDown,
+                null,
+                modifier = Modifier
+                    .clickable {
+                        isArtistVisible.value = !isArtistVisible.value
+                    }
+                    .padding(7.dp),
+                colorFilter = ColorFilter.tint(LightBlue)
+            )
+        }
+        if (isArtistVisible.value) {
+            if (lstArtist.value == null) {
+                CircularProgressIndicator(color = Color.Gray)
+            } else {
+                LazyRow(state = rememberLazyListState()) {
+                    items(lstArtist.value!!.cast.size) { itemCount ->
+                        val artist = lstArtist.value!!.cast[itemCount]
+                        Column(modifier = Modifier.width(100.dp).padding(end = 8.dp)) {
+                            Box(
+                                modifier = Modifier
+                                    .height(100.dp)
+                                    .width(100.dp)
+                                    .clip(CircleShape)
+                            ) {
+                                GlideImage(
+                                    imageModel = ApiURL.IMAGE_URL.plus(artist.profilePath),
+                                    modifier = Modifier.fillMaxSize(),
+                                    contentScale = ContentScale.Crop,
+                                    loading = {
+                                        CircularProgressIndicator(color = Color.Gray)
+                                    },
+                                    failure = {
+                                        Icon(
+                                            imageVector = Icons.Filled.Warning,
+                                            contentDescription = "Error"
+                                        )
+                                    }
+                                )
+                            }
+                            Text(
+                                artist.name,
+                                maxLines = 1,
+                                color = White,
+                                overflow = TextOverflow.Clip,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .basicMarquee()
+                            )
+                        }
+                    }
+                }
+            }
+        }
     }
 
 }
