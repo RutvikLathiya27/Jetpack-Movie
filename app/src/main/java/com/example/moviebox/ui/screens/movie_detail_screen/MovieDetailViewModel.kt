@@ -8,26 +8,32 @@ import com.example.moviebox.data.models.moview_detail.MovieDetailModel
 import com.example.moviebox.data.repository.MovieRepository
 import com.example.moviebox.utils.DataState
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.CoroutineExceptionHandler
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class MovieDetailViewModel @Inject constructor(private val repositoryInterface: MovieRepository) :
-    ViewModel() {
+class MovieDetailViewModel @Inject constructor(
+    private val repositoryInterface: MovieRepository
+) : ViewModel() {
 
     private val _movieDetail = MutableStateFlow<MovieDetailModel?>(null)
-    val movieDetail get() = _movieDetail.asStateFlow()
+    val movieDetail: StateFlow<MovieDetailModel?> = _movieDetail.asStateFlow()
 
-    private val _isLoading = MutableStateFlow<Boolean>(true)
-    val isLoading get() = _isLoading.asStateFlow()
+    private val _isLoading = MutableStateFlow(true)
+    val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
+
+    private val coroutineExceptionHandler = CoroutineExceptionHandler { _, throwable ->
+        Log.d("ISHAN", ": " + throwable.message)
+    }
 
     fun getMovieDetail(movieId: Int) {
-        Log.e("TAG", "result >>>>>>> called")
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO + coroutineExceptionHandler) {
             repositoryInterface.movieDetail(movieId).collect {
-                Log.e("TAG", "result >>>>>>> ${it}")
                 when (it) {
                     is DataState.Loading -> {
                         _isLoading.value = true
@@ -47,27 +53,16 @@ class MovieDetailViewModel @Inject constructor(private val repositoryInterface: 
     }
 
     fun getMovieCast(movieId: Int): MutableStateFlow<Artist?> {
-
         val artists: MutableStateFlow<Artist?> = MutableStateFlow(null)
 
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO + coroutineExceptionHandler) {
             repositoryInterface.getMovieCast(movieId).collect {
-                when (it) {
-                    is DataState.Loading -> {
-                    }
-
-                    is DataState.Success -> {
-                        artists.value= it . data
-                    }
-
-                    is DataState.Error -> {
-                    }
+                if (it is DataState.Success) {
+                    artists.value = it.data
                 }
             }
         }
 
         return artists
     }
-
-
 }

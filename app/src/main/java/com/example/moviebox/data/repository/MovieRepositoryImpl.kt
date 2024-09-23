@@ -43,25 +43,24 @@ class MovieRepositoryImpl @Inject constructor(
         }
     }
 
-
     override fun nowPlayingPagingDataSource(genreId: String?): Flow<PagingData<MovieItem>> = Pager(
         pagingSourceFactory = { NowPlayingPagingDataSource(apiService, genreId) },
-        config = PagingConfig(1)
+        config = PagingConfig(pageSize = 20, maxSize = 100)
     ).flow
 
     override fun popularMoviesPagingDataSource(genreId: String?): Flow<PagingData<MovieItem>> = Pager(
         pagingSourceFactory = { PopularPagingDataSource(apiService, genreId) },
-        config = PagingConfig(1)
+        config = PagingConfig(pageSize = 20, maxSize = 100)
     ).flow
 
     override fun topRatedMoviesPagingDataSource(genreId: String?): Flow<PagingData<MovieItem>> = Pager(
         pagingSourceFactory = { TopRatedPagingDataSource(apiService, genreId) },
-        config = PagingConfig(1)
+        config = PagingConfig(pageSize = 20, maxSize = 100)
     ).flow
 
     override fun upcomingMoviesPagingDataSource(genreId: String?): Flow<PagingData<MovieItem>> = Pager(
         pagingSourceFactory = { UpcomingPagingDataSource(apiService, genreId) },
-        config = PagingConfig(1)
+        config = PagingConfig(pageSize = 20, maxSize = 100)
     ).flow
 
 }

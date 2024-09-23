@@ -1,38 +1,34 @@
 package com.example.moviebox.ui.composable
 
-import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.CircularProgressIndicator
-import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
+import coil.compose.AsyncImage
+import coil.request.ImageRequest
+import com.example.moviebox.R
 import com.example.moviebox.data.models.MovieItem
 import com.example.moviebox.data.remote.ApiURL
 import com.example.moviebox.ui.theme.MBTheme
-import com.skydoves.landscapist.glide.GlideImage
 
 @Composable
 fun MovieItemList(
@@ -40,52 +36,37 @@ fun MovieItemList(
     dataStream: LazyPagingItems<MovieItem>,
     onClick: (Int) -> Unit
 ) {
-
-    val isDisplayProgress = remember { mutableStateOf(true) }
-
-    Column(modifier = Modifier.fillMaxSize()) {
-        CircularIndeterminateProgressBar(isDisplayed = isDisplayProgress.value, 0.5f)
+    Box(modifier = Modifier.fillMaxSize()) {
+        if (dataStream.loadState.refresh == LoadState.Loading) {
+            CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+        }
         LazyVerticalGrid(
             columns = GridCells.Fixed(3),
             modifier = modifier.padding(vertical = 4.dp, horizontal = 6.dp)
         ) {
-
+            if (dataStream.loadState.prepend is LoadState.Loading) {
+                item {
+                    CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                }
+            }
             items(dataStream.itemCount) { itemCount ->
                 MovieItemPreview(
-                    movieItem = dataStream[itemCount]!!, onClick
+                    movieItem = dataStream[itemCount],
+                    onClick = onClick
                 )
             }
-        }
-    }
-
-    dataStream.apply {
-        Log.e("Tag", "data strea, >>>>>>>>>>>> $loadState")
-        when {
-            loadState.refresh is LoadState.Loading -> {
-                isDisplayProgress.value = true
-            }
-
-            loadState.append is LoadState.Loading -> {
-                isDisplayProgress.value = true
-            }
-
-            loadState.refresh is LoadState.NotLoading -> {
-                isDisplayProgress.value = false
-            }
-
-            loadState.append is LoadState.NotLoading -> {
-                isDisplayProgress.value = false
+            if (dataStream.loadState.append is LoadState.Loading) {
+                item {
+                    CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                }
             }
         }
     }
-
-
 }
 
 @Composable
-fun MovieItemPreview(movieItem: MovieItem, onClick: (Int) -> Unit) {
-
-    Log.e("TAG", "id -----------------> ${movieItem.id} : ${movieItem.title}")
+fun MovieItemPreview(movieItem: MovieItem?, onClick: (Int) -> Unit) {
+    movieItem ?: return
 
     Box(
         modifier = Modifier
@@ -94,35 +75,29 @@ fun MovieItemPreview(movieItem: MovieItem, onClick: (Int) -> Unit) {
             .padding(all = 4.dp)
             .clip(RoundedCornerShape(16.dp))
     ) {
-        GlideImage(
-            imageModel = ApiURL.IMAGE_URL.plus(movieItem.posterPath),
+        AsyncImage(
+            model = ImageRequest.Builder(LocalContext.current)
+                .data(ApiURL.IMAGE_URL.plus(movieItem.posterPath))
+                .crossfade(true)
+                .build(),
             contentScale = ContentScale.Crop,
             modifier = Modifier.fillMaxSize(),
-            loading = {
-                CircularProgressIndicator(color = Color.Gray)
-            },
-            failure = {
-                Icon(imageVector = Icons.Filled.Warning, contentDescription = "Error")
-            }
+            placeholder = painterResource(R.drawable.ic_placeholder),
+            contentDescription = null,
+            fallback = painterResource(R.drawable.ic_placeholder),
         )
-        Box(
+        Text(
+            text = String.format("%.1f", movieItem.voteAverage),
+            fontSize = 14.sp,
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis,
+            color = MBTheme.colors.lightBlue,
             modifier = Modifier
                 .padding(all = 4.dp)
                 .align(Alignment.BottomEnd)
                 .clip(CircleShape)
-                .background(color = MBTheme.colors.black80),
-        ) {
-
-            Text(
-                text = String.format("%.1f", movieItem.voteAverage),
-                fontSize = 14.sp,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                color = MBTheme.colors.lightBlue,
-                modifier = Modifier.padding(vertical = 4.dp, horizontal = 6.dp)
-            )
-
-        }
+                .background(color = MBTheme.colors.black80)
+                .padding(vertical = 4.dp, horizontal = 6.dp)
+        )
     }
-
 }
