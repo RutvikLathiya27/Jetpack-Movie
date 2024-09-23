@@ -19,6 +19,7 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -123,7 +124,7 @@ fun BottomNavigationBar(
 @Composable
 fun MainScreen(navControllerMain: NavHostController) {
     var selectedTabIndex by rememberSaveable {
-        mutableStateOf(0)
+        mutableIntStateOf(0)
     }
     val navController = rememberNavController()
 
@@ -141,33 +142,19 @@ fun MainScreen(navControllerMain: NavHostController) {
         },
         topBar = { MovieBoxAppBar("Movie Box") }
     ) { innerPadding ->
-
         NavHost(navController = navController, startDestination = Screens.MainScreen) {
             composable<Screens.MainScreen> {
                 NowPlayingScreen(Modifier.padding(innerPadding), navControllerMain)
             }
-
-
-
             composable<Screens.TopRatingScreen> {
                 TopRatedScreen(Modifier.padding(innerPadding), navController)
             }
             composable<Screens.UpcomingScreen> {
-                UpComingMovieScreen(
-                    modifier = Modifier.padding(innerPadding),
-                    navController = navController
-                )
+                UpComingMovieScreen(Modifier.padding(innerPadding), navController)
             }
-
-
         }
-
     }
 }
-
-@Serializable
-data class ABC(val a: Int)
-
 
 @Preview(showBackground = true)
 @Composable

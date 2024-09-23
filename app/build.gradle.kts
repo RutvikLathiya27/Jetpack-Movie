@@ -91,8 +91,8 @@ dependencies {
     // compose navigation
     implementation(libs.androidx.navigation.compose)
 
-    //glide
-    implementation(libs.glide.library)
+    //coil
+    implementation(libs.coil.compose)
 
     //serialization
     implementation(libs.ktor.serialization.kotlinx.json)
