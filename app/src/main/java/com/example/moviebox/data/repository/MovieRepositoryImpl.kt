@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
+import com.example.moviebox.data.models.BaseModel
 import com.example.moviebox.data.models.MovieItem
 import com.example.moviebox.data.models.moview_detail.MovieDetailModel
 import com.example.moviebox.data.paging.NowPlayingPagingDataSource
@@ -39,6 +40,16 @@ class MovieRepositoryImpl @Inject constructor(
             val lstArtist = apiService.getCast(movieId)
             emit(DataState.Success(lstArtist))
         } catch (e: Exception){
+            emit(DataState.Error(e))
+        }
+    }
+
+    override suspend fun getSearchResult(searchText: String): Flow<DataState<BaseModel>> = flow {
+        emit(DataState.Loading)
+        try {
+            val lstArtist = apiService.getSearchResult(searchText)
+            emit(DataState.Success(lstArtist))
+        }catch (e:Exception){
             emit(DataState.Error(e))
         }
     }
