@@ -29,7 +29,7 @@ class SearchViewModel @Inject constructor(
     private val _searchMovie = MutableStateFlow<BaseModel?>(null)
     val searchMovie: StateFlow<BaseModel?> = _searchMovie.asStateFlow()
 
-    private val _isLoading = MutableStateFlow(true)
+    private val _isLoading = MutableStateFlow(false)
     val isLoading: StateFlow<Boolean> = _isLoading.asStateFlow()
 
     var searchMovieJob : Job? = null

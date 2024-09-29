@@ -15,7 +15,9 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.ui.Alignment
 import androidx.compose.material.icons.outlined.Search
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -26,7 +28,6 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
@@ -45,9 +46,7 @@ import coil.request.ImageRequest
 import com.example.moviebox.R
 import com.example.moviebox.data.models.MovieItem
 import com.example.moviebox.data.remote.ApiURL
-import com.example.moviebox.ui.composable.CircularProgressBar
 import com.example.moviebox.ui.navigations.Screens
-import com.example.moviebox.ui.screens.movie_detail_screen.MovieDetailScreen
 import com.example.moviebox.ui.theme.MBTheme
 
 @Composable
@@ -103,7 +102,11 @@ fun SearchScreen(navController: NavHostController) {
         },
     ) { innerPadding ->
         if (isLoading) {
-            CircularProgressBar()
+            Box(modifier = Modifier.fillMaxSize()) {
+                CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+            }
+        } else if(!isLoading && searchText.isEmpty()){
+
         } else {
             if (searchMovie?.results?.isEmpty() == true || searchMovie?.results == null) {
                 Text(

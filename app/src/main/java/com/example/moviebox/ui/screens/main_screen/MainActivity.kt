@@ -7,6 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
@@ -16,6 +17,7 @@ import androidx.compose.material.icons.outlined.Home
 import androidx.compose.material.icons.outlined.PlayArrow
 import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material.icons.outlined.Star
+import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.NavigationBar
@@ -150,21 +152,19 @@ fun MainScreen(navControllerMain: NavHostController) {
         },
         topBar = { MovieBoxAppBar("Movie Box") },
         floatingActionButton = {
-            IconButton(
+            FloatingActionButton(
                 onClick = {
                     navControllerMain.navigate(Screens.SearchScreen)
                 },
-                content = {
-                    Icon(
-                        imageVector = Icons.Outlined.Search,
-                        contentDescription = null,
-                        modifier = Modifier
-                            .clip(CircleShape)
-                            .background(color = MBTheme.colors.lightBlue)
-                            .padding(all = 20.dp),
-                    )
-                }
-            )
+                containerColor = MBTheme.colors.lightBlue
+            ) {
+                Icon(
+                    imageVector = Icons.Outlined.Search,
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(24.dp) // Adjust size if needed
+                )
+            }
         }
     ) { innerPadding ->
         NavHost(navController = navController, startDestination = Screens.MainScreen) {
