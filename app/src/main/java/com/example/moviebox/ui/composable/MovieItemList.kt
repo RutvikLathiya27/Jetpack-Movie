@@ -4,6 +4,8 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
@@ -46,7 +48,7 @@ fun MovieItemList(
         ) {
             if (dataStream.loadState.prepend is LoadState.Loading) {
                 item {
-                    CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                    CircularProgressBar()
                 }
             }
             items(dataStream.itemCount) { itemCount ->
@@ -57,10 +59,21 @@ fun MovieItemList(
             }
             if (dataStream.loadState.append is LoadState.Loading) {
                 item {
-                    CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                    CircularProgressBar()
                 }
             }
         }
+    }
+}
+
+@Composable
+fun CircularProgressBar(){
+    Box(
+        modifier = Modifier
+            .fillMaxWidth()
+            .height(200.dp)
+    ) {
+        CircularProgressIndicator(modifier = Modifier.align(Alignment.Center))
     }
 }
 
@@ -70,7 +83,8 @@ fun MovieItemPreview(movieItem: MovieItem?, onClick: (Int) -> Unit) {
 
     Box(
         modifier = Modifier
-            .fillMaxSize()
+            .fillMaxWidth()
+            .height(200.dp)
             .clickable { onClick(movieItem.id) }
             .padding(all = 4.dp)
             .clip(RoundedCornerShape(16.dp))
