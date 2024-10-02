@@ -49,5 +49,11 @@ interface ApiService {
         @Query("api_key") api_key: String = ApiURL.API_KEY
     ): Artist
 
+    @GET("search/movie?include_adult=true&page=1")
+    suspend fun getSearchResult(
+        @Query("query") searchKey : String,
+        @Query("api_key") api_key: String = ApiURL.API_KEY
+    ) : BaseModel
+
 
 }

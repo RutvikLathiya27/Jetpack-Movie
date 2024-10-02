@@ -10,10 +10,9 @@ sealed class Screens() {
     data object TopRatingScreen : Screens()
     @Serializable
     data object UpcomingScreen : Screens()
-
-    data object PopularScreen : Screens()
-
     @Serializable
     data class MovieDetailScreen(val movieId : Int) : Screens()
+    @Serializable
+    data object SearchScreen : Screens()
 }
 

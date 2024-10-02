@@ -12,6 +12,7 @@ private val SystemGrey = Color(0xFF3A3A3C)
 private val LightBlue = Color(0xff6EACDE)
 private val LightBlue75 = Color(0xBF6EACDE)
 private val White50 = Color(0x80FFFFFF)
+private val trasnparent = Color(0xffFFFFFF)
 
 @Immutable
 data class MBColors(
